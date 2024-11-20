@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace IBroStudio\PaymentMethodManager;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -8,27 +8,20 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
+use IBroStudio\PaymentMethodManager\Commands\PaymentMethodManagerCommand;
 use Illuminate\Filesystem\Filesystem;
-use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class PaymentMethodManagerServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'lunar-payment-method-manager';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'lunar-payment-method-manager';
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package->name(static::$name)
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
@@ -36,10 +29,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('ibrostudio/lunar-payment-method-manager');
             });
 
-        $configFileName = $package->shortName();
+        $configFileName = 'payment-method-manager';
 
         if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
             $package->hasConfigFile();
@@ -80,18 +73,15 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
+                    $file->getRealPath() => base_path("stubs/lunar-payment-method-manager/{$file->getFilename()}"),
+                ], 'lunar-payment-method-manager-stubs');
             }
         }
-
-        // Testing
-        Testable::mixin(new TestsSkeleton);
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'ibrostudio/lunar-payment-method-manager';
     }
 
     /**
@@ -100,9 +90,9 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
+            // AlpineComponent::make('lunar-payment-method-manager', __DIR__ . '/../resources/dist/components/lunar-payment-method-manager.js'),
+            //Css::make('lunar-payment-method-manager-styles', __DIR__ . '/../resources/dist/lunar-payment-method-manager.css'),
+            //Js::make('lunar-payment-method-manager-scripts', __DIR__ . '/../resources/dist/lunar-payment-method-manager.js'),
         ];
     }
 
@@ -112,7 +102,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            SkeletonCommand::class,
+            PaymentMethodManagerCommand::class,
         ];
     }
 
@@ -146,7 +136,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_skeleton_table',
+            'create_lunar-payment-method-manager_table',
         ];
     }
 }

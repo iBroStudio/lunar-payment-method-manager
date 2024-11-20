@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace IBroStudio\PaymentMethodManager\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -12,21 +12,33 @@ use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
+use IBroStudio\DataRepository\Commands\DataRepositoryInstallCommand;
+use IBroStudio\DataRepository\DataRepositoryServiceProvider;
+use IBroStudio\PaymentMethodManager\PaymentMethodManagerServiceProvider;
+use IBroStudio\TestSupport\Testing\Concerns\LunarTestCase;
+use IBroStudio\TestSupport\TestSupportServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Artisan;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use Spatie\LaravelData\LaravelDataServiceProvider;
 
 class TestCase extends Orchestra
 {
+    use LunarTestCase;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'IBroStudio\\PaymentMethodManager\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
+
+        static::lunarSetUp();
+
+        Artisan::call(DataRepositoryInstallCommand::class);
     }
 
     protected function getPackageProviders($app)
@@ -44,7 +56,11 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
-            SkeletonServiceProvider::class,
+            ...static::lunarPackageProviders(),
+            PaymentMethodManagerServiceProvider::class,
+            DataRepositoryServiceProvider::class,
+            LaravelDataServiceProvider::class,
+            TestSupportServiceProvider::class,
         ];
     }
 
@@ -52,9 +68,7 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/create_payment_method_manager_tables.php.stub';
         $migration->up();
-        */
     }
 }

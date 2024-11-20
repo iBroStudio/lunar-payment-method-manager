@@ -1,15 +1,15 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace IBroStudio\PaymentMethodManager;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class SkeletonPlugin implements Plugin
+class PaymentMethodManagerPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'lunar-payment-method-manager';
     }
 
     public function register(Panel $panel): void

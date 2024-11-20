@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace IBroStudio\PaymentMethodManager\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class PaymentMethodManagerCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'lunar-payment-method-manager';
 
     public $description = 'My command';
 

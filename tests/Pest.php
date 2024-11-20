@@ -1,5 +1,13 @@
 <?php
 
-use VendorName\Skeleton\Tests\TestCase;
+use IBroStudio\PaymentMethodManager\Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(TestCase::class)->in(__DIR__);
+pest()->printer()->compact();
+
+pest()
+    ->extends(
+        TestCase::class,
+        RefreshDatabase::class,
+    )
+    ->in(__DIR__);

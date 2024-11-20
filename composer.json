@@ -1,59 +1,62 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "ibrostudio/lunar-payment-method-manager",
+    "description": "This is my package lunar-payment-method-manager",
     "keywords": [
-        ":vendor_name",
+        "iBroStudio",
         "laravel",
-        ":package_slug"
+        "lunar",
+        "payment"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/ibrostudio/lunar-payment-method-manager",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/ibrostudio/lunar-payment-method-manager/issues",
+        "source": "https://github.com/ibrostudio/lunar-payment-method-manager"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "iBroStudio",
+            "email": "hello@ibro.studio",
             "role": "Developer"
         }
     ],
+    "version": "1.0.0",
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
+        "ibrostudio/filament-billing": "^1.5",
+        "ibrostudio/laravel-data-repository": "^1.11",
+        "lunarphp/lunar": "^1.0.0-beta",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
+        "ibrostudio/laravel-test-support": "^1.12",
+        "larastan/larastan": "^2.0.1",
         "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^7.9",
-        "nunomaduro/larastan": "^2.0.1",
-        "orchestra/testbench": "^8.0",
-        "pestphp/pest": "^2.1",
-        "pestphp/pest-plugin-arch": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^9.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "spatie/laravel-ray": "^1.26"
+        "phpstan/phpstan-phpunit": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "IBroStudio\\PaymentMethodManager\\": "src/",
+            "IBroStudio\\PaymentMethodManager\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "IBroStudio\\PaymentMethodManager\\Tests\\": "tests/"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=1G",
         "test": "vendor/bin/pest",
+        "test-f": "vendor/bin/pest --filter",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"
     },
@@ -61,19 +64,46 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "IBroStudio\\PaymentMethodManager\\PaymentMethodManagerServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "PaymentMethodManager": "IBroStudio\\PaymentMethodManager\\Facades\\PaymentMethodManager"
             }
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:ibrostudio/filament-billing.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ibrostudio/filament-panel-manager.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ibrostudio/filament-user.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ibrostudio/filament-tenant.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ibrostudio/laravel-test-support.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ibrostudio/lunar-subscription.git"
+        }
+    ]
 }
