@@ -2,6 +2,7 @@
 
 namespace IBroStudio\PaymentMethodManager\Models;
 
+use IBroStudio\DataRepository\Casts\DataObjectCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +19,13 @@ class CustomerMethod extends Model
         'customer_id',
         'state',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'credentials' => DataObjectCast::class,
+        ];
+    }
 
     public function method(): BelongsTo
     {

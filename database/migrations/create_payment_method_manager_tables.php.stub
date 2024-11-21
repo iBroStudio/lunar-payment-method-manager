@@ -11,16 +11,17 @@ return new class extends Migration
     {
         Schema::create('payment_gateways', function (Blueprint $table) {
             $table->id();
-            $table->string('class');
             $table->string('name');
+            $table->string('class');
             $table->string('icon');
             $table->unsignedBigInteger('credentials')->nullable();
         });
 
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('gateway_id')->constrained('payment_gateways')->onDelete('cascade');
             $table->json('name');
+            $table->string('class');
+            $table->foreignId('gateway_id')->constrained('payment_gateways')->onDelete('cascade');
             $table->json('description')->nullable();
             $table->string('icon');
             $table->unsignedTinyInteger('enabled')->default(0);
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('method_id')->constrained('payment_methods')->onDelete('cascade');
             $table->foreignIdFor(\Lunar\Models\Customer::class)->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('credentials')->nullable();
             $table->string('state')->default(PaymentMethodStatesEnum::PENDING);
             $table->timestamps();
         });

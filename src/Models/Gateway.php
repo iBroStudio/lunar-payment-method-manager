@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Gateway extends Model
+abstract class Gateway extends Model
 {
     use HasDataRepository;
     use HasFactory;
@@ -18,8 +18,8 @@ class Gateway extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'class',
         'name',
+        'class',
         'icon',
     ];
 
@@ -28,6 +28,13 @@ class Gateway extends Model
         return [
             'credentials' => DataObjectCast::class,
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Model $gateway) {
+            $gateway->class = get_called_class();
+        });
     }
 
     public function methods(): HasMany
