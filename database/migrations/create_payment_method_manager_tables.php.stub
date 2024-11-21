@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('gateway_id')->constrained('payment_gateways')->onDelete('cascade');
             $table->json('description')->nullable();
             $table->string('icon');
-            $table->unsignedTinyInteger('enabled')->default(0);
+            $table->unsignedTinyInteger('active')->default(0);
         });
 
         Schema::create('payment_customer_methods', function (Blueprint $table) {

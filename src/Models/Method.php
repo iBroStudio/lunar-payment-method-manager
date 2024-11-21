@@ -2,10 +2,10 @@
 
 namespace IBroStudio\PaymentMethodManager\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 abstract class Method extends Model
 {
@@ -21,17 +21,24 @@ abstract class Method extends Model
         'gateway_id',
         'description',
         'icon',
-        'enabled',
+        'active',
     ];
 
     protected $casts = [
         'name' => AsCollection::class,
         'description' => AsCollection::class,
-        'enabled' => 'boolean',
+        'active' => 'boolean',
     ];
 
-    public function gateway(): BelongsTo
+    protected static function booted(): void
     {
-        return $this->belongsTo(Gateway::class);
+        static::creating(function (Method $method) {
+            $method->class = get_called_class();
+        });
+    }
+
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('active', 1);
     }
 }
