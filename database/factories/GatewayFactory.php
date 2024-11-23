@@ -12,7 +12,6 @@ class GatewayFactory extends Factory
     public function definition(): array
     {
         return [
-            'class' => $this->faker->word(),
             'name' => $this->faker->word(),
             'icon' => 'lucide-circle-dollar-sign',
         ];

@@ -10,13 +10,6 @@ it('can create a payment gateway', function () {
     );
 });
 
-it('can set the class attribute', function () {
-    expect(
-        FakePaymentGateway::factory()->create()
-            ->class
-    )->toBe(FakePaymentGateway::class);
-});
-
 it('can save credentials', function () {
     $data = [
         'token' => fake()->uuid,

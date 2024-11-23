@@ -4,9 +4,9 @@ namespace IBroStudio\PaymentMethodManager\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-interface MethodContract
+interface CustomerMethodContract
 {
     public static function bootHasClassProperty();
 
-    public function gateway(): BelongsTo;
+    public function method(): BelongsTo;
 }

@@ -2,14 +2,14 @@
 
 namespace IBroStudio\PaymentMethodManager\Models;
 
+use IBroStudio\PaymentMethodManager\Concerns\HasChildrenModels;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class Method extends Model
+class Method extends Model
 {
-    use HasFactory;
+    use HasChildrenModels;
 
     protected $table = 'payment_methods';
 

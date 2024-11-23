@@ -4,14 +4,14 @@ namespace IBroStudio\PaymentMethodManager\Models;
 
 use IBroStudio\DataRepository\Casts\DataObjectCast;
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IBroStudio\PaymentMethodManager\Concerns\HasChildrenModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-abstract class Gateway extends Model
+class Gateway extends Model
 {
+    use HasChildrenModels;
     use HasDataRepository;
-    use HasFactory;
 
     protected $table = 'payment_gateways';
 
@@ -23,6 +23,13 @@ abstract class Gateway extends Model
         'icon',
     ];
 
+    protected static function booted(): void
+    {
+        static::creating(function (Model $gateway) {
+            $gateway->class = get_called_class();
+        });
+    }
+
     protected function casts(): array
     {
         return [
@@ -30,11 +37,9 @@ abstract class Gateway extends Model
         ];
     }
 
-    protected static function booted(): void
+    public function getMorphClass()
     {
-        static::creating(function (Model $gateway) {
-            $gateway->class = get_called_class();
-        });
+        return $this->class;
     }
 
     public function methods(): HasMany

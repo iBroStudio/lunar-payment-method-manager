@@ -2,4 +2,7 @@
 
 namespace IBroStudio\PaymentMethodManager\Contracts;
 
-interface GatewayContract {}
+interface GatewayContract
+{
+    public static function bootHasClassProperty();
+}

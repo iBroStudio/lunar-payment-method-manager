@@ -27,6 +27,7 @@
         "ibrostudio/filament-billing": "^1.5",
         "ibrostudio/laravel-data-repository": "^1.11",
         "lunarphp/lunar": "^1.0.0-beta",
+        "spatie/laravel-data": "^4.11",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -74,7 +75,8 @@
                 "IBroStudio\\PaymentMethodManager\\PaymentMethodManagerServiceProvider"
             ],
             "aliases": {
-                "PaymentMethodManager": "IBroStudio\\PaymentMethodManager\\Facades\\PaymentMethodManager"
+                "PaymentMethodManager": "IBroStudio\\PaymentMethodManager\\Facades\\PaymentMethodManager",
+                "PaymentGatewayRegistry": "PaymentMethodRegistry"
             }
         }
     },

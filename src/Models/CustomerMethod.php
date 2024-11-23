@@ -3,18 +3,22 @@
 namespace IBroStudio\PaymentMethodManager\Models;
 
 use IBroStudio\DataRepository\Casts\DataObjectCast;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use IBroStudio\DataRepository\Concerns\HasDataRepository;
+use IBroStudio\PaymentMethodManager\Concerns\HasChildrenModels;
+use IBroStudio\PaymentMethodManager\Enums\PaymentMethodStatesEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lunar\Models\Customer;
 
 class CustomerMethod extends Model
 {
-    use HasFactory;
+    use HasChildrenModels;
+    use HasDataRepository;
 
     protected $table = 'payment_customer_methods';
 
     protected $fillable = [
+        'class',
         'method_id',
         'customer_id',
         'state',
@@ -24,12 +28,8 @@ class CustomerMethod extends Model
     {
         return [
             'credentials' => DataObjectCast::class,
+            'state' => PaymentMethodStatesEnum::class,
         ];
-    }
-
-    public function method(): BelongsTo
-    {
-        return $this->belongsTo(Method::class);
     }
 
     public function customer(): BelongsTo
