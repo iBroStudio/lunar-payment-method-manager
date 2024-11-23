@@ -1,6 +1,7 @@
 <?php
 
 use IBroStudio\PaymentMethodManager\Data\GatewayRegistryData;
+use IBroStudio\PaymentMethodManager\Data\MethodRegistryData;
 use IBroStudio\PaymentMethodManager\Exceptions\GatewayNotFoundException;
 use IBroStudio\PaymentMethodManager\Exceptions\InvalidGatewayException;
 use IBroStudio\PaymentMethodManager\Exceptions\InvalidMethodException;
@@ -69,9 +70,28 @@ it('can retrieve all gateways', function () {
         methods: [FakePaymentMethod2::class]
     );
 
+    // PaymentMethodRegistry::all()->pluck('name', 'key')->toArray(),
     $gateways = PaymentMethodRegistry::all();
 
     expect($gateways)
         ->toBeInstanceOf(Collection::class)
         ->and($gateways->count())->toBe(2);
+});
+
+it('can retrieve all methods', function () {
+    PaymentMethodRegistry::register(
+        gateway: FakePaymentGateway::class,
+        methods: [FakePaymentMethod::class]
+    );
+    PaymentMethodRegistry::register(
+        gateway: FakePaymentGateway2::class,
+        methods: [FakePaymentMethod2::class]
+    );
+
+    $methods = PaymentMethodRegistry::methods();
+    //    dd($methods->where('key', 'fake-payment-method2')->toArray());
+    //  dd($methods->pluck('name', 'key')->toArray());
+    expect($methods)
+        ->toBeInstanceOf(Collection::class)
+        ->and($methods->first())->toBeInstanceOf(MethodRegistryData::class);
 });

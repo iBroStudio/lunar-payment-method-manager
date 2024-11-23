@@ -14,3 +14,16 @@ Package to manage payment methods in Lunar.
 ```bash
 composer require ibrostudio/lunar-payment-method-manager
 ```
+
+```bash
+php artisan lunar-payment-method-manager:install
+```
+Register plugin in panel
+```php
+protected function plugins(): array
+    {
+        return [
+            \IBroStudio\PaymentMethodManager\PaymentMethodManagerPlugin::make(),
+        ];
+    }
+```

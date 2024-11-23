@@ -28,34 +28,14 @@ class PaymentMethodRegistry
             $this->validateMethod($method);
         });
 
+        $data = GatewayRegistryData::from([$gateway, $methods]);
+
         $this->registry->put(
-            key: Str::kebab(class_basename($gateway)),
-            value: GatewayRegistryData::from([$gateway, $methods])
+            key: $data->key,
+            value: $data
         );
 
         return true;
-    }
-
-    protected function validateGateway(string $gateway): void
-    {
-        if (! class_exists($gateway)) {
-            throw new GatewayNotFoundException($gateway);
-        }
-
-        if (! is_subclass_of($gateway, Gateway::class)) {
-            throw new InvalidGatewayException($gateway);
-        }
-    }
-
-    protected function validateMethod(string $method): void
-    {
-        if (! class_exists($method)) {
-            throw new MethodNotFoundException($method);
-        }
-
-        if (! is_subclass_of($method, Method::class)) {
-            throw new InvalidMethodException($method);
-        }
     }
 
     public function add(string $class, ?string $key = null): bool
@@ -84,5 +64,34 @@ class PaymentMethodRegistry
     public function get(string $key): ?GatewayRegistryData
     {
         return $this->registry[$key] ?? null;
+    }
+
+    public function methods(): Collection
+    {
+        return $this->registry->map(function (GatewayRegistryData $gateway) {
+            return $gateway->methods->flatten();
+        })->flatten();
+    }
+
+    protected function validateGateway(string $gateway): void
+    {
+        if (! class_exists($gateway)) {
+            throw new GatewayNotFoundException($gateway);
+        }
+
+        if (! is_subclass_of($gateway, Gateway::class)) {
+            throw new InvalidGatewayException($gateway);
+        }
+    }
+
+    protected function validateMethod(string $method): void
+    {
+        if (! class_exists($method)) {
+            throw new MethodNotFoundException($method);
+        }
+
+        if (! is_subclass_of($method, Method::class)) {
+            throw new InvalidMethodException($method);
+        }
     }
 }

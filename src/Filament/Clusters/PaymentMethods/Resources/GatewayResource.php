@@ -4,7 +4,6 @@ namespace IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resou
 
 use Filament\Forms\Form;
 use Filament\Pages\SubNavigationPosition;
-use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
