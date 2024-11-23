@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.4.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.3.0...HEAD) (2024-11-23)
+### Features
+* improve registry ([c10c65](https://github.com/iBroStudio/lunar-payment-method-manager/commit/c10c65e7c96a562fd851f0ac40e963240db69624))
+### Bug Fixes
+* migration registration in provider ([5bc707](https://github.com/iBroStudio/lunar-payment-method-manager/commit/5bc7079933fc3df6b76ac94a86681204cca7bb11))
+
+---
+
 ## [1.3.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.2.0...HEAD) (2024-11-23)
 ### Features
 * add gateway and method Filament resources ([a13ca6](https://github.com/iBroStudio/lunar-payment-method-manager/commit/a13ca65ce3a4d654c1aaef1b04660b178d0cdd5f))
