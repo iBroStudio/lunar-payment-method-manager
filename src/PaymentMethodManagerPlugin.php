@@ -9,12 +9,16 @@ class PaymentMethodManagerPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'lunar-payment-method-manager';
+        return 'payment-method-manager';
     }
 
     public function register(Panel $panel): void
     {
-        //
+        $panel
+            ->discoverClusters(
+                in: __DIR__ . '/Filament/Clusters',
+                for: 'IBroStudio\\PaymentMethodManager\\Filament\\Clusters'
+            );
     }
 
     public function boot(Panel $panel): void
