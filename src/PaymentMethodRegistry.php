@@ -2,7 +2,12 @@
 
 namespace IBroStudio\PaymentMethodManager;
 
+use IBroStudio\PaymentMethodManager\Actions\UpsertGateway;
+use IBroStudio\PaymentMethodManager\Actions\UpsertMethod;
+use IBroStudio\PaymentMethodManager\Data\GatewayData;
 use IBroStudio\PaymentMethodManager\Data\GatewayRegistryData;
+use IBroStudio\PaymentMethodManager\Data\MethodData;
+use IBroStudio\PaymentMethodManager\Data\MethodRegistryData;
 use IBroStudio\PaymentMethodManager\Exceptions\GatewayNotFoundException;
 use IBroStudio\PaymentMethodManager\Exceptions\InvalidGatewayException;
 use IBroStudio\PaymentMethodManager\Exceptions\InvalidMethodException;
@@ -61,9 +66,9 @@ class PaymentMethodRegistry
         return $this->registry;
     }
 
-    public function get(string $key): ?GatewayRegistryData
+    public function get(string $gateway_key): ?GatewayRegistryData
     {
-        return $this->registry[$key] ?? null;
+        return $this->registry->get($gateway_key);
     }
 
     public function methods(): Collection
@@ -71,6 +76,32 @@ class PaymentMethodRegistry
         return $this->registry->map(function (GatewayRegistryData $gateway) {
             return $gateway->methods->flatten();
         })->flatten();
+    }
+
+    public function createGatewayAndMethodsModels(string $gateway_key): Gateway
+    {
+        $registry = $this->registry->get($gateway_key);
+
+        if (is_null($registry)) {
+            throw new GatewayNotFoundException($gateway_key);
+        }
+
+        $gateway = UpsertGateway::run(
+            GatewayData::from($registry->only('name'))
+        );
+
+        $registry->methods->each(function (MethodRegistryData $methodRegistryData) use ($gateway) {
+            UpsertMethod::run(
+                MethodData::from([
+                    'name' => [config('app.locale') => $methodRegistryData->name],
+                    'class' => $methodRegistryData->class,
+                    'gateway_id' => $gateway->id,
+                    'icon' => $methodRegistryData->class::$defaultIcon
+                ])
+            );
+        });
+
+        return $gateway;
     }
 
     protected function validateGateway(string $gateway): void

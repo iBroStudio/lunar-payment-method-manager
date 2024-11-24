@@ -26,6 +26,7 @@
         "filament/filament": "^3.0",
         "ibrostudio/filament-billing": "^1.5",
         "ibrostudio/laravel-data-repository": "^1.11",
+        "lorisleiva/laravel-actions": "^2.8",
         "lunarphp/lunar": "^1.0.0-beta",
         "spatie/laravel-data": "^4.11",
         "spatie/laravel-package-tools": "^1.15.0"

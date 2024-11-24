@@ -13,6 +13,8 @@ class Method extends Model
 
     protected $table = 'payment_methods';
 
+    public static string $defaultIcon = 'lucide-credit-card';
+
     public $timestamps = false;
 
     protected $fillable = [

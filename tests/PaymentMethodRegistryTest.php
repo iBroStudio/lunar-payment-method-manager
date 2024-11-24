@@ -12,6 +12,7 @@ use IBroStudio\TestSupport\Models\FakePaymentGateway2;
 use IBroStudio\TestSupport\Models\FakePaymentMethod;
 use IBroStudio\TestSupport\Models\FakePaymentMethod2;
 use Illuminate\Support\Collection;
+use function Pest\Laravel\assertModelExists;
 
 it('can register', function () {
     expect(
@@ -94,4 +95,16 @@ it('can retrieve all methods', function () {
     expect($methods)
         ->toBeInstanceOf(Collection::class)
         ->and($methods->first())->toBeInstanceOf(MethodRegistryData::class);
+});
+
+it('can create gateway model', function () {
+    PaymentMethodRegistry::register(
+        gateway: FakePaymentGateway::class,
+        methods: [FakePaymentMethod::class]
+    );
+
+    $gateway = PaymentMethodRegistry::createGatewayAndMethodsModels('fake-payment-gateway');
+
+    assertModelExists($gateway);
+    assertModelExists($gateway->methods->first());
 });

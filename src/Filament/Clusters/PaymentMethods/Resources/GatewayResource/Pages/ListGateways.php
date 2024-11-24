@@ -4,7 +4,9 @@ namespace IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resou
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use IBroStudio\PaymentMethodManager\Facades\PaymentMethodRegistry;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\GatewayResource;
+use Illuminate\Database\Eloquent\Model;
 
 class ListGateways extends ListRecords
 {
@@ -13,7 +15,10 @@ class ListGateways extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->using(function (array $data): Model {
+                    return PaymentMethodRegistry::createGatewayAndMethodsModels($data['gateway']);
+                }),
         ];
     }
 }

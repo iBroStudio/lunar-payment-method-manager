@@ -20,7 +20,6 @@ class Gateway extends Model
     protected $fillable = [
         'name',
         'class',
-        'icon',
     ];
 
     protected static function booted(): void
