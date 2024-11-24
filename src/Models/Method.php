@@ -42,7 +42,7 @@ class Method extends Model
 
     public function gateway(): BelongsTo
     {
-        return $this->belongsTo(Gateway::class);
+        return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
     public function scopeActive(Builder $query): void
