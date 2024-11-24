@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.5.2](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.5.1...HEAD) (2024-11-24)
+### Bug Fixes
+* foreignKey in gateway relation ([5541a2](https://github.com/iBroStudio/lunar-payment-method-manager/commit/5541a2888fae839280d92d8b25526dec2eefaacc))
+
+---
+
 ## [1.5.1](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.5.0...HEAD) (2024-11-24)
 ### Features
 * filament resources wip ([35c0ca](https://github.com/iBroStudio/lunar-payment-method-manager/commit/35c0ca525b9983897f91d8c83b168d92b1fe347d))
