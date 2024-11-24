@@ -2,17 +2,21 @@
 
 namespace IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources;
 
-use Filament\Forms\Form;
+use Filament\Forms;
 use Filament\Pages\SubNavigationPosition;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Table;
+use Filament\Tables;
+use Guava\FilamentIconPicker\Forms\IconPicker;
+use IBroStudio\PaymentMethodManager\Actions\UpsertMethod;
+use IBroStudio\PaymentMethodManager\Data\MethodData;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\MethodResource\Pages;
 use IBroStudio\PaymentMethodManager\Models\Method;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Lunar\Admin\Support\Forms\Components\TranslatedRichEditor;
+use Lunar\Admin\Support\Forms\Components\TranslatedText;
 use Lunar\Admin\Support\Resources\BaseResource;
+use Lunar\Models\Language;
 
 class MethodResource extends BaseResource
 {
@@ -28,29 +32,72 @@ class MethodResource extends BaseResource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form
             ->schema([
+                Forms\Components\Grid::make(1)
+                    ->schema([
+                        static::getNameFormComponent(),
+                        static::getDescriptionFormComponent(),
+                        static::getIconFormComponent(),
+                        static::getActiveFormComponent(),
+                    ])
             ]);
     }
 
-    public static function table(Table $table): Table
+    protected static function getNameFormComponent(): Forms\Components\Component
+    {
+        return TranslatedText::make('name')
+            ->label(__('Name'))
+            ->required()
+            ->autofocus();
+    }
+
+    protected static function getDescriptionFormComponent(): Forms\Components\Component
+    {
+        return TranslatedText::make('description')
+            ->label(__('Description'));
+    }
+
+    protected static function getIconFormComponent(): Forms\Components\Component
+    {
+        return IconPicker::make('icon');
+    }
+
+    protected static function getActiveFormComponent(): Forms\Components\Component
+    {
+        return Forms\Components\Toggle::make('active');
+    }
+
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('gateway.name'),
+
+                Tables\Columns\TextColumn::make('name'),
+
+                Tables\Columns\IconColumn::make('icon')
+                    ->icon(fn (string $state): string => $state)
+                    ->color('primary'),
+
+                Tables\Columns\ToggleColumn::make('active'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\EditAction::make()
+                    ->using(function (Model $record, array $data): Model {
+                        return UpsertMethod::run(
+                            methodData: $data,
+                            method: $record
+                        );
+                        $record->update($data);
+
+                        return $record;
+                    }),
             ]);
     }
 
@@ -58,8 +105,6 @@ class MethodResource extends BaseResource
     {
         return [
             'index' => Pages\ListMethods::route('/'),
-            'create' => Pages\CreateMethod::route('/create'),
-            'edit' => Pages\EditMethod::route('/{record}/edit'),
         ];
     }
 

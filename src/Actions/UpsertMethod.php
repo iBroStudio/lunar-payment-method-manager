@@ -14,9 +14,17 @@ final class UpsertMethod
     use AsAction;
 
     public function handle(
-        MethodData $methodData,
+        MethodData|array $methodData,
         ?Method    $method = null): Method
     {
+        if (is_array($methodData)) {
+            $methodData = MethodData::from(
+                $method ?
+                array_merge($methodData, ['class' => $method->class, 'gateway_id' => $method->gateway_id])
+                : $methodData
+            );
+        }
+
         if (is_null($method)) {
             return Method::create($methodData->toArray());
         }

@@ -4,10 +4,7 @@ namespace IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resou
 
 use Filament\Forms;
 use Filament\Pages\SubNavigationPosition;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables;
 use Filament\Tables\Table;
 use IBroStudio\PaymentMethodManager\Facades\PaymentMethodRegistry;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods;
@@ -63,17 +60,18 @@ class GatewayResource extends BaseResource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

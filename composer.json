@@ -24,6 +24,7 @@
     "require": {
         "php": "^8.3",
         "filament/filament": "^3.0",
+        "guava/filament-icon-picker": "^2.2",
         "ibrostudio/filament-billing": "^1.5",
         "ibrostudio/laravel-data-repository": "^1.11",
         "lorisleiva/laravel-actions": "^2.8",

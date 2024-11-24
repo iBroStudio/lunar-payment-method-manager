@@ -6,6 +6,7 @@ use IBroStudio\PaymentMethodManager\Concerns\HasChildrenModels;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Method extends Model
 {
@@ -37,6 +38,11 @@ class Method extends Model
         static::creating(function (Method $method) {
             $method->class = get_called_class();
         });
+    }
+
+    public function gateway(): BelongsTo
+    {
+        return $this->belongsTo(Gateway::class);
     }
 
     public function scopeActive(Builder $query): void
