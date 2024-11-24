@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.5.1](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.5.0...HEAD) (2024-11-24)
+### Features
+* filament resources wip ([35c0ca](https://github.com/iBroStudio/lunar-payment-method-manager/commit/35c0ca525b9983897f91d8c83b168d92b1fe347d))
+### Bug Fixes
+* gateway and method class on saving models ([83336a](https://github.com/iBroStudio/lunar-payment-method-manager/commit/83336aa1a268436c6d86867cfed0a9b883c76eaf))
+
+---
+
 ## [1.5.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.4.0...HEAD) (2024-11-24)
 ### Features
 * add gateway and method upsert actions ([a8173c](https://github.com/iBroStudio/lunar-payment-method-manager/commit/a8173cf27faf74a4c73e71b4146a39bd3ac7fc43))
