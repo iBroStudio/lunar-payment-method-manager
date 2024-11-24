@@ -32,6 +32,7 @@ class GatewayResource extends BaseResource
         return $form
             ->schema([
                 static::getGatewayFormComponent(),
+                static::getCredentialsFormComponents($form),
             ]);
     }
 
@@ -47,13 +48,14 @@ class GatewayResource extends BaseResource
             )
             ->selectablePlaceholder(false)
             ->required()
-            ->native(false);
+            ->native(false)
+            ->hiddenOn('edit');
+    }
 
-        return Forms\Components\TextInput::make('name')
-            ->label(__('Handle'))
-            ->required()
-            ->maxLength(255);
-        //PaymentMethodRegistry::all()->pluck('name', 'key')->toArray()
+    protected static function getCredentialsFormComponents(Forms\Form $form): array
+    {
+        //dd($form->getRecord()->child());
+        return [];
     }
 
     public static function table(Table $table): Table
@@ -67,7 +69,8 @@ class GatewayResource extends BaseResource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->modalHeading(__('Delete the gateway and its payment methods')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -81,7 +84,7 @@ class GatewayResource extends BaseResource
         return [
             'index' => Pages\ListGateways::route('/'),
             //'create' => Pages\CreateGateway::route('/create'),
-            'edit' => Pages\EditGateway::route('/{record}/edit'),
+            //'edit' => Pages\EditGateway::route('/{record}/edit'),
         ];
     }
 

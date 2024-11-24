@@ -104,7 +104,10 @@ it('can create gateway model', function () {
     );
 
     $gateway = PaymentMethodRegistry::createGatewayAndMethodsModels('fake-payment-gateway');
+    $method = $gateway->methods->first();
 
     assertModelExists($gateway);
-    assertModelExists($gateway->methods->first());
+    expect($gateway->class)->toBe(FakePaymentGateway::class);
+    assertModelExists($method);
+    expect($method->class)->toBe(FakePaymentMethod::class);
 });

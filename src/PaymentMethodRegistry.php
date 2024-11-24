@@ -87,7 +87,7 @@ class PaymentMethodRegistry
         }
 
         $gateway = UpsertGateway::run(
-            GatewayData::from($registry->only('name'))
+            GatewayData::from($registry->only('name', 'class'))
         );
 
         $registry->methods->each(function (MethodRegistryData $methodRegistryData) use ($gateway) {

@@ -16,7 +16,7 @@ final class UpsertGateway
         ?Gateway $gateway = null): Gateway
     {
         if (is_null($gateway)) {
-            return Gateway::create($gatewayData->toArray());
+            return $gatewayData->class::create($gatewayData->toArray());
         }
 
         $gateway->fill($gatewayData->toArray());

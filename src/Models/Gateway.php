@@ -43,6 +43,6 @@ class Gateway extends Model
 
     public function methods(): HasMany
     {
-        return $this->hasMany(Method::class);
+        return $this->hasMany(Method::class, 'gateway_id');
     }
 }

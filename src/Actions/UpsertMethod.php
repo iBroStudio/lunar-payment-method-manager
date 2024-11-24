@@ -26,7 +26,7 @@ final class UpsertMethod
         }
 
         if (is_null($method)) {
-            return Method::create($methodData->toArray());
+            return $methodData->class::create($methodData->toArray());
         }
 
         $method->fill($methodData->toArray());
