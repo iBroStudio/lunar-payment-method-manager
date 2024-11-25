@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.6.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.5.2...HEAD) (2024-11-25)
+### Features
+* add getCredentialsFormComponents ([d19d24](https://github.com/iBroStudio/lunar-payment-method-manager/commit/d19d24aec5656f49fbf2ec63cb9ce84f69a1e56c))
+
+---
+
 ## [1.5.2](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.5.1...HEAD) (2024-11-24)
 ### Bug Fixes
 * foreignKey in gateway relation ([5541a2](https://github.com/iBroStudio/lunar-payment-method-manager/commit/5541a2888fae839280d92d8b25526dec2eefaacc))
