@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.7.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.6.0...HEAD) (2024-11-25)
+### Features
+* add UpsertCredentials action ([1d4570](https://github.com/iBroStudio/lunar-payment-method-manager/commit/1d45709c8bf0b755696c83c809382faf4a8509d0))
+### Bug Fixes
+* getCredentialsFormComponents needs child instance ([9e956f](https://github.com/iBroStudio/lunar-payment-method-manager/commit/9e956f1b0471e74607a5b75dffade103784ab41f))
+
+---
+
 ## [1.6.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.5.2...HEAD) (2024-11-25)
 ### Features
 * add getCredentialsFormComponents ([d19d24](https://github.com/iBroStudio/lunar-payment-method-manager/commit/d19d24aec5656f49fbf2ec63cb9ce84f69a1e56c))
