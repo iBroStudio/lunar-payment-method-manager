@@ -6,10 +6,12 @@ use Filament\Forms;
 use Filament\Pages\SubNavigationPosition;
 use Filament\Tables;
 use Filament\Tables\Table;
+use IBroStudio\PaymentMethodManager\Actions\UpsertCredentials;
 use IBroStudio\PaymentMethodManager\Facades\PaymentMethodRegistry;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\GatewayResource\Pages;
 use IBroStudio\PaymentMethodManager\Models\Gateway;
+use Illuminate\Database\Eloquent\Model;
 use Lunar\Admin\Support\Resources\BaseResource;
 
 class GatewayResource extends BaseResource
@@ -65,7 +67,12 @@ class GatewayResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->using(function (Model $record, array $data): Model {
+                        UpsertCredentials::run($data, $record);
+
+                        return $record;
+                    }),
                 Tables\Actions\DeleteAction::make()
                     ->modalHeading(__('Delete the gateway and its payment methods')),
             ])
