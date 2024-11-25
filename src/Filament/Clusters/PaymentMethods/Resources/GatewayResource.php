@@ -31,8 +31,8 @@ class GatewayResource extends BaseResource
     {
         return $form
             ->schema([
-                static::getGatewayFormComponent(),
-                static::getCredentialsFormComponents($form),
+                is_null($form->getRecord()) ?
+                    static::getGatewayFormComponent() : static::getCredentialsFormComponents($form),
             ]);
     }
 
@@ -48,14 +48,12 @@ class GatewayResource extends BaseResource
             )
             ->selectablePlaceholder(false)
             ->required()
-            ->native(false)
-            ->hiddenOn('edit');
+            ->native(false);
     }
 
-    protected static function getCredentialsFormComponents(Forms\Form $form): array
+    protected static function getCredentialsFormComponents(Forms\Form $form): ?Forms\Components\Component
     {
-        //dd($form->getRecord()->child());
-        return [];
+        return $form->getRecord()->getCredentialsFormComponents($form);
     }
 
     public static function table(Table $table): Table
