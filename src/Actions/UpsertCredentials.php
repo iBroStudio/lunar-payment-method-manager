@@ -11,10 +11,11 @@ class UpsertCredentials
 
     public function handle(
         array $credentialsData,
-        Model $model
-    ): bool {
+        Model $model): bool
+    {
+        $child = $model->child();
 
-        $model->credentials = $credentialsData;
+        $child->credentials = $credentialsData;
 
         return $model->save();
     }
