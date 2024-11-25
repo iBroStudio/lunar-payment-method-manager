@@ -25,6 +25,7 @@ class CustomerMethod extends Model
         'method_id',
         'customer_id',
         'state',
+        'credentials',
     ];
 
     protected function casts(): array

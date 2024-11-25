@@ -13,6 +13,7 @@ class UpsertCredentials
         array $credentialsData,
         Model $model
     ): bool {
+
         $model->credentials = $credentialsData;
 
         return $model->save();
