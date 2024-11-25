@@ -12,6 +12,7 @@ use IBroStudio\TestSupport\Models\FakePaymentGateway2;
 use IBroStudio\TestSupport\Models\FakePaymentMethod;
 use IBroStudio\TestSupport\Models\FakePaymentMethod2;
 use Illuminate\Support\Collection;
+
 use function Pest\Laravel\assertModelExists;
 
 it('can register', function () {

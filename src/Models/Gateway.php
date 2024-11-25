@@ -2,11 +2,9 @@
 
 namespace IBroStudio\PaymentMethodManager\Models;
 
-
 use IBroStudio\DataRepository\Casts\DataObjectCast;
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
 use IBroStudio\PaymentMethodManager\Concerns;
-use IBroStudio\TestSupport\Data\FakePaymentGatewayData;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -37,8 +35,7 @@ class Gateway extends Model
     protected function casts(): array
     {
         return [
-            'credentials' =>
-                DataObjectCast::class.(isset(static::$dataClass) ? ':'.static::$dataClass : ''),
+            'credentials' => DataObjectCast::class . (isset(static::$dataClass) ? ':' . static::$dataClass : ''),
         ];
     }
 

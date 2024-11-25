@@ -30,8 +30,7 @@ class CustomerMethod extends Model
     protected function casts(): array
     {
         return [
-            'credentials' =>
-                DataObjectCast::class.(isset(static::$dataClass) ? ':'.static::$dataClass : ''),
+            'credentials' => DataObjectCast::class . (isset(static::$dataClass) ? ':' . static::$dataClass : ''),
             'state' => PaymentMethodStatesEnum::class,
         ];
     }

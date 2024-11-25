@@ -8,6 +8,7 @@ trait HasCredentialsComponentsForm
 {
     public function getCredentialsFormComponents(Forms\Form $form): Forms\Components\Component
     {
-        return $this->class::{static::$dataClass}::getCredentialsFormComponents($form);
+        /** @var string $dataClass */
+        return $this->child()::$dataClass::getCredentialsFormComponents($form);
     }
 }

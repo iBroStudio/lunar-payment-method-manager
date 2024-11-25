@@ -3,7 +3,6 @@
 namespace IBroStudio\PaymentMethodManager\Actions;
 
 use IBroStudio\PaymentMethodManager\Data\GatewayData;
-use IBroStudio\PaymentMethodManager\Data\GatewayRegistryData;
 use IBroStudio\PaymentMethodManager\Models\Gateway;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -13,8 +12,8 @@ final class UpsertGateway
 
     public function handle(
         GatewayData $gatewayData,
-        ?Gateway $gateway = null): Gateway
-    {
+        ?Gateway $gateway = null
+    ): Gateway {
         if (is_null($gateway)) {
             return $gatewayData->class::create($gatewayData->toArray());
         }

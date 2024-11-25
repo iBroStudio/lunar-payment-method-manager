@@ -2,7 +2,6 @@
 
 namespace IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\MethodResource\Pages;
 
-use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\MethodResource;
 

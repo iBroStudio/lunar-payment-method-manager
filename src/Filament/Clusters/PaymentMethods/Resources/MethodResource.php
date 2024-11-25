@@ -7,16 +7,12 @@ use Filament\Pages\SubNavigationPosition;
 use Filament\Tables;
 use Guava\FilamentIconPicker\Forms\IconPicker;
 use IBroStudio\PaymentMethodManager\Actions\UpsertMethod;
-use IBroStudio\PaymentMethodManager\Data\MethodData;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\MethodResource\Pages;
 use IBroStudio\PaymentMethodManager\Models\Method;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Lunar\Admin\Support\Forms\Components\TranslatedRichEditor;
 use Lunar\Admin\Support\Forms\Components\TranslatedText;
 use Lunar\Admin\Support\Resources\BaseResource;
-use Lunar\Models\Language;
 
 class MethodResource extends BaseResource
 {
@@ -42,7 +38,7 @@ class MethodResource extends BaseResource
                         static::getDescriptionFormComponent(),
                         static::getIconFormComponent(),
                         static::getActiveFormComponent(),
-                    ])
+                    ]),
             ]);
     }
 

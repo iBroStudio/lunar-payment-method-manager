@@ -10,7 +10,6 @@ use IBroStudio\PaymentMethodManager\Facades\PaymentMethodRegistry;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\GatewayResource\Pages;
 use IBroStudio\PaymentMethodManager\Models\Gateway;
-use IBroStudio\Subscription\Enums\ChargeUnitEnum;
 use Lunar\Admin\Support\Resources\BaseResource;
 
 class GatewayResource extends BaseResource

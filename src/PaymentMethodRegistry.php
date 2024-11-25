@@ -96,7 +96,7 @@ class PaymentMethodRegistry
                     'name' => [config('app.locale') => $methodRegistryData->name],
                     'class' => $methodRegistryData->class,
                     'gateway_id' => $gateway->id,
-                    'icon' => $methodRegistryData->class::$defaultIcon
+                    'icon' => $methodRegistryData->class::$defaultIcon,
                 ])
             );
         });
