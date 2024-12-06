@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.8.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.7.1...HEAD) (2024-12-06)
+### Features
+* refactor methods classes into one ([6f7541](https://github.com/iBroStudio/lunar-payment-method-manager/commit/6f75410f33a01a81e9cc4d89ec1d78f9c3b77149))
+### Bug Fixes
+* upsertCredentials has to be performed on child ([9bfe7e](https://github.com/iBroStudio/lunar-payment-method-manager/commit/9bfe7e8b5190a1b74a384126658467322af01201))
+* credentials need to be fillable ([f834d3](https://github.com/iBroStudio/lunar-payment-method-manager/commit/f834d362147a255d661863e93c246194d60c953b))
+
+---
+
 ## [1.7.1](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.7.0...HEAD) (2024-11-25)
 ### Bug Fixes
 * add UpsertCredentials in gateway resource ([ce3340](https://github.com/iBroStudio/lunar-payment-method-manager/commit/ce3340e4c8af9143ecc9c3bd36056d43b64453a3))
