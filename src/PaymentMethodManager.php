@@ -15,7 +15,7 @@ class PaymentMethodManager
 
     public function registerPaymentMethod() {}
 
-    public function getPaymentMethodOptions(Cart $cart)
+    public function getPaymentMethodOptions(Cart $cart): array
     {
         $query = Method::enabled()
             ->whereCustomerId(null)

@@ -79,8 +79,8 @@
                 "IBroStudio\\PaymentMethodManager\\PaymentMethodManagerServiceProvider"
             ],
             "aliases": {
-                "PaymentMethodManager": "IBroStudio\\PaymentMethodManager\\Facades\\PaymentMethodManager",
-                "PaymentGatewayRegistry": "PaymentMethodRegistry"
+                "PaymentMethod": "IBroStudio\\PaymentMethodManager\\Facades\\PaymentMethod",
+                "PaymentMethodRegistry": "IBroStudio\\PaymentMethodManager\\Facades\\PaymentMethodRegistry"
             }
         }
     },

@@ -2,7 +2,7 @@
 
 use IBroStudio\Billing\Models\Customer;
 use IBroStudio\PaymentMethodManager\Enums\PaymentMethodStatesEnum;
-use IBroStudio\PaymentMethodManager\PaymentMethodManager;
+use IBroStudio\PaymentMethodManager\Facades\PaymentMethod;
 use IBroStudio\TestSupport\Models\FakePaymentMethod;
 use IBroStudio\TestSupport\Models\FakePaymentMethod2;
 use Lunar\Facades\Payments;
@@ -14,6 +14,7 @@ it('can get methods', function () {
     $user = \IBroStudio\User\Models\User::factory()->create();
     $customer = $user->customers()->create(Customer::factory()->make()->toArray());
     actingAs($user);
+
     $method1 = FakePaymentMethod::factory()->create();
     $method2 = FakePaymentMethod2::factory()->create();
     $method3 = FakePaymentMethod::factory()
@@ -27,7 +28,7 @@ it('can get methods', function () {
                 'expires_at' => fake()->dateTime,
             ],
         ]);
-    //    dd($method3->credentials->presenter()->asOptionDescription());
+
     FakePaymentMethod::factory()
         ->withState(PaymentMethodStatesEnum::EXPIRED)
         ->create([
@@ -45,7 +46,7 @@ it('can get methods', function () {
     $cart = Cart::factory()->create(['customer_id' => $customer->id]);
 
     expect(
-        (new PaymentMethodManager)->getPaymentMethodOptions($cart)
+        PaymentMethod::getPaymentMethodOptions($cart)
     )->toMatchArray([
         'options' => [
             $method3->getRadioDeckKey() => $method3->getRadioDeckLabel(),
@@ -63,10 +64,6 @@ it('can get methods', function () {
             $method2->getRadioDeckKey() => $method2->getRadioDeckIcon(),
         ],
     ]);
-
-    dd(
-        (new PaymentMethodManager)->getPaymentMethodOptions($cart)
-    );
 });
 
 it('', function () {
