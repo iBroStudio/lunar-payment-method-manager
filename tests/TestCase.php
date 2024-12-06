@@ -17,6 +17,8 @@ use IBroStudio\DataRepository\DataRepositoryServiceProvider;
 use IBroStudio\PaymentMethodManager\PaymentMethodManagerServiceProvider;
 use IBroStudio\TestSupport\Testing\Concerns\LunarTestCase;
 use IBroStudio\TestSupport\TestSupportServiceProvider;
+use IBroStudio\User\Commands\UserInstallCommand;
+use IBroStudio\User\UserServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\LivewireServiceProvider;
@@ -38,6 +40,7 @@ class TestCase extends Orchestra
 
         static::lunarSetUp();
 
+        Artisan::call(UserInstallCommand::class);
         Artisan::call(DataRepositoryInstallCommand::class);
     }
 
@@ -60,6 +63,7 @@ class TestCase extends Orchestra
             PaymentMethodManagerServiceProvider::class,
             DataRepositoryServiceProvider::class,
             LaravelDataServiceProvider::class,
+            UserServiceProvider::class,
             TestSupportServiceProvider::class,
         ];
     }
@@ -68,7 +72,10 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        $migration = include __DIR__ . '/../database/migrations/create_payment_method_manager_tables.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/2024_12_05_061824_create_payment_method_manager_tables.php';
+        $migration->up();
+
+        $migration = include __DIR__ . '/../database/migrations/2024_12_05_061933_create_payment_intents_table.php';
         $migration->up();
     }
 }

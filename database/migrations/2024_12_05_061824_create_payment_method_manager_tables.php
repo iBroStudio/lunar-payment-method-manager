@@ -4,6 +4,7 @@ use IBroStudio\PaymentMethodManager\Enums\PaymentMethodStatesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Lunar\Models\Customer;
 
 return new class extends Migration
 {
@@ -23,14 +24,19 @@ return new class extends Migration
             $table->foreignId('gateway_id')->constrained('payment_gateways')->onDelete('cascade');
             $table->json('description')->nullable();
             $table->string('icon');
-            $table->unsignedTinyInteger('active')->default(0);
+            $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('credentials')->nullable();
+            $table->string('state')->nullable();
+            $table->unsignedTinyInteger('default')->default(0);
+            $table->unsignedTinyInteger('enabled')->default(0);
+            $table->timestamps();
         });
 
         Schema::create('payment_customer_methods', function (Blueprint $table) {
             $table->id();
             $table->string('class');
             $table->foreignId('method_id')->constrained('payment_methods')->onDelete('cascade');
-            $table->foreignIdFor(\Lunar\Models\Customer::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('credentials')->nullable();
             $table->string('state')->default(PaymentMethodStatesEnum::PENDING);
             $table->timestamps();

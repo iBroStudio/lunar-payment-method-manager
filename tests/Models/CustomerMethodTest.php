@@ -1,5 +1,6 @@
 <?php
 
+use IBroStudio\PaymentMethodManager\Enums\PaymentMethodStatesEnum;
 use IBroStudio\PaymentMethodManager\Models\CustomerMethod;
 use IBroStudio\PaymentMethodManager\Models\Gateway;
 use IBroStudio\PaymentMethodManager\Models\Method;
@@ -17,6 +18,7 @@ it('can create a customer payment method', function () {
     assertModelExists(
         FakePaymentCustomerMethod::factory()->create()
     );
+    dd(FakePaymentCustomerMethod::factory()->create());
 });
 
 it('can save credentials', function () {
@@ -60,4 +62,17 @@ it('can handle multiple models', function () {
         ->and(CustomerMethod::all()->count())->toBe(20)
         ->and(FakePaymentCustomerMethod::all()->count())->toBe(10)
         ->and(FakePaymentCustomerMethod2::all()->count())->toBe(10);
+});
+
+it('can scope active methods', function () {
+    FakePaymentCustomerMethod::factory()
+        ->withState(PaymentMethodStatesEnum::ACTIVE)
+        ->create();
+
+    FakePaymentCustomerMethod::factory()
+        ->withState(PaymentMethodStatesEnum::EXPIRED)
+        ->create();
+
+    expect(CustomerMethod::all()->count())->toBe(2)
+        ->and(CustomerMethod::active()->count())->toBe(1);
 });

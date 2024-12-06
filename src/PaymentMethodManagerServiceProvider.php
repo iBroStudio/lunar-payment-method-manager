@@ -9,7 +9,11 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use IBroStudio\PaymentMethodManager\Commands\PaymentMethodManagerCommand;
+use IBroStudio\PaymentMethodManager\Models\Method;
+use IBroStudio\PaymentMethodManager\Models\PaymentIntent;
 use Illuminate\Filesystem\Filesystem;
+use Lunar\Models\Cart;
+use Lunar\Models\Customer;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -23,7 +27,11 @@ class PaymentMethodManagerServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
-            ->hasMigration('create_payment_method_manager_tables')
+            ->hasMigrations([
+                '2024_12_05_061824_create_payment_method_manager_tables',
+                '2024_12_05_061933_create_payment_intents_table',
+            ])
+            ->hasTranslations()
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
@@ -32,20 +40,17 @@ class PaymentMethodManagerServiceProvider extends PackageServiceProvider
                     ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('ibrostudio/lunar-payment-method-manager');
             });
+        /*
+                $configFileName = 'payment-method-manager';
 
-        $configFileName = 'payment-method-manager';
+                if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
+                    $package->hasConfigFile();
+                }
 
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
-            $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../resources/lang'))) {
-            $package->hasTranslations();
-        }
-
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
+                if (file_exists($package->basePath('/../resources/views'))) {
+                    $package->hasViews(static::$viewNamespace);
+                }
+        */
     }
 
     public function packageRegistered(): void
@@ -79,6 +84,18 @@ class PaymentMethodManagerServiceProvider extends PackageServiceProvider
                 ], 'lunar-payment-method-manager-stubs');
             }
         }
+
+        Customer::resolveRelationUsing('paymentMethods', function (Customer $customer) {
+            return $customer->hasMany(Method::class);
+        });
+
+        Customer::resolveRelationUsing('activePaymentMethods', function (Customer $customer) {
+            return $customer->paymentMethods()->active();
+        });
+
+        Cart::resolveRelationUsing('paymentIntents', function (Cart $cart) {
+            return $cart->hasMany(PaymentIntent::class);
+        });
     }
 
     protected function getAssetPackageName(): ?string

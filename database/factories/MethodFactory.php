@@ -14,8 +14,8 @@ class MethodFactory extends Factory
     {
         return [
             'gateway_id' => Gateway::factory(),
-            'name' => $this->faker->word(),
-            'description' => $this->faker->sentence(),
+            'name' => ['en' => $this->faker->word()],
+            'description' => ['en' => $this->faker->sentence()],
             'icon' => 'lucide-credit-card',
             'enabled' => 1,
         ];

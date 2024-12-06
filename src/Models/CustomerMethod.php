@@ -40,4 +40,9 @@ class CustomerMethod extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('state', PaymentMethodStatesEnum::ACTIVE);
+    }
 }

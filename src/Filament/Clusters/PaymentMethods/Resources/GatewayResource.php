@@ -69,7 +69,7 @@ class GatewayResource extends BaseResource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->using(function (Model $record, array $data): Model {
-                        UpsertCredentials::run($data, $record);
+                        UpsertCredentials::run($data['credentials'], $record);
 
                         return $record;
                     }),
