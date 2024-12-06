@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.8.1](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.8.0...HEAD) (2024-12-06)
+### Features
+* add PaymentMethod facade ([7f0db1](https://github.com/iBroStudio/lunar-payment-method-manager/commit/7f0db186afc4f628d7af63caf83f919e78ef4591))
+
+---
+
 ## [1.8.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.7.1...HEAD) (2024-12-06)
 ### Features
 * refactor methods classes into one ([6f7541](https://github.com/iBroStudio/lunar-payment-method-manager/commit/6f75410f33a01a81e9cc4d89ec1d78f9c3b77149))
