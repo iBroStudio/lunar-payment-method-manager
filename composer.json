@@ -20,7 +20,7 @@
             "role": "Developer"
         }
     ],
-    "version": "1.9.0",
+    "version": "1.9.1",
     "require": {
         "php": "^8.3",
         "filament/filament": "^3.0",
