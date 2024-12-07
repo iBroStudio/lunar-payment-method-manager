@@ -5,12 +5,13 @@ namespace IBroStudio\PaymentMethodManager\Models;
 use IBroStudio\DataRepository\Casts\DataObjectCast;
 use IBroStudio\DataRepository\Concerns\HasDataRepository;
 use IBroStudio\PaymentMethodManager\Concerns;
+use IBroStudio\PaymentMethodManager\Contracts\GatewayContract;
+use IBroStudio\PaymentMethodManager\GatewayApi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Gateway extends Model
 {
-    use Concerns\HasChildrenModels;
     use Concerns\HasCredentialsComponentsForm;
     use HasDataRepository;
 
@@ -45,8 +46,22 @@ class Gateway extends Model
         return $this->class;
     }
 
+    public function getChildModel(): GatewayContract | Gateway
+    {
+        if (get_parent_class($this) === Gateway::class) {
+            return $this;
+        }
+
+        return $this->class::find($this->getKey());
+    }
+
     public function methods(): HasMany
     {
         return $this->hasMany(Method::class, 'gateway_id');
+    }
+
+    public function api(): GatewayApi
+    {
+        return $this->getChildModel()->api();
     }
 }

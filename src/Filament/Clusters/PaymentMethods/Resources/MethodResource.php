@@ -37,7 +37,7 @@ class MethodResource extends BaseResource
                         static::getNameFormComponent(),
                         static::getDescriptionFormComponent(),
                         static::getIconFormComponent(),
-                        static::getActiveFormComponent(),
+                        static::getEnabledFormComponent(),
                     ]),
             ]);
     }
@@ -61,9 +61,9 @@ class MethodResource extends BaseResource
         return IconPicker::make('icon');
     }
 
-    protected static function getActiveFormComponent(): Forms\Components\Component
+    protected static function getEnabledFormComponent(): Forms\Components\Component
     {
-        return Forms\Components\Toggle::make('active');
+        return Forms\Components\Toggle::make('enabled');
     }
 
     public static function table(Tables\Table $table): Tables\Table
@@ -78,7 +78,7 @@ class MethodResource extends BaseResource
                     ->icon(fn (string $state): string => $state)
                     ->color('primary'),
 
-                Tables\Columns\ToggleColumn::make('active'),
+                Tables\Columns\ToggleColumn::make('enabled'),
             ])
             ->filters([
                 //
@@ -90,9 +90,6 @@ class MethodResource extends BaseResource
                             methodData: $data,
                             method: $record
                         );
-                        $record->update($data);
-
-                        return $record;
                     }),
             ]);
     }

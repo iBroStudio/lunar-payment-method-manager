@@ -8,7 +8,7 @@ use IBroStudio\PaymentMethodManager\Models\Method;
 
 trait HasChildrenModels
 {
-    public function child(): static
+    public function getChildModel(): static
     {
         if (in_array(get_parent_class($this), [Gateway::class, Method::class, CustomerMethod::class])) {
             return $this;

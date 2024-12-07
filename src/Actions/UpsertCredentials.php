@@ -13,10 +13,10 @@ class UpsertCredentials
         array $credentialsData,
         Model $model
     ): bool {
-        $child = $model->child();
+        $child = $model->getChildModel();
 
         $child->credentials = $credentialsData;
 
-        return $model->save();
+        return $child->save();
     }
 }

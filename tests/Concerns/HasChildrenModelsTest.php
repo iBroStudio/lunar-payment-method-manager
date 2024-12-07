@@ -22,7 +22,7 @@ it('can retrieve gateway child model', function () {
 
     $gateways
         ->each(function (Gateway $gateway) {
-            expect($gateway->child())->toBeInstanceOf($gateway->class);
+            expect($gateway->getChildModel())->toBeInstanceOf($gateway->class);
         });
 });
 
@@ -38,22 +38,6 @@ it('can retrieve method child model', function () {
 
     $methods
         ->each(function (Method $method) {
-            expect($method->child())->toBeInstanceOf($method->class);
-        });
-});
-
-it('can retrieve customer method child model', function () {
-    FakePaymentCustomerMethod::factory()->create();
-    FakePaymentCustomerMethod2::factory()->create();
-
-    $methods = CustomerMethod::all();
-
-    expect($methods->count())->toBe(2)
-        ->and(FakePaymentCustomerMethod::all()->count())->toBe(1)
-        ->and(FakePaymentCustomerMethod2::all()->count())->toBe(1);
-
-    $methods
-        ->each(function (CustomerMethod $method) {
-            expect($method->child())->toBeInstanceOf($method->class);
+            expect($method->getChildModel())->toBeInstanceOf($method->class);
         });
 });

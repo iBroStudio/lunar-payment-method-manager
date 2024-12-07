@@ -7,6 +7,7 @@ use IBroStudio\DataRepository\Concerns\HasDataRepository;
 use IBroStudio\PanelManager\Forms\Concerns\HasTranslatableRadioDeck;
 use IBroStudio\PanelManager\Forms\Contracts\RadioDeckableContract;
 use IBroStudio\PaymentMethodManager\Concerns;
+use IBroStudio\PaymentMethodManager\Contracts\MethodContract;
 use IBroStudio\PaymentMethodManager\Enums\PaymentMethodStatesEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
@@ -22,7 +23,6 @@ use Lunar\Models\Customer;
 class Method extends Model implements PaymentTypeInterface, RadioDeckableContract
 {
     use Concerns\CanManageCheckoutPayment;
-    use Concerns\HasChildrenModels;
     use Concerns\HasCredentialsComponentsForm;
     use HasDataRepository;
     use HasTranslatableRadioDeck;
@@ -59,7 +59,7 @@ class Method extends Model implements PaymentTypeInterface, RadioDeckableContrac
     {
         return Attribute::make(
             get: fn () => ! is_null($this->customer_id) ?
-                $this->child()->credentials->presenter()->asOptionDescription() : $this->translate($this->radioDeckOption['description']),
+                $this->getChildModel()->credentials->presenter()->asOptionDescription() : $this->translate($this->radioDeckOption['description']),
         );
     }
 
@@ -80,6 +80,15 @@ class Method extends Model implements PaymentTypeInterface, RadioDeckableContrac
         static::creating(function (Method $method) {
             $method->class = get_called_class();
         });
+    }
+
+    public function getChildModel(): MethodContract | Method
+    {
+        if (get_parent_class($this) === Method::class) {
+            return $this;
+        }
+
+        return $this->class::find($this->getKey());
     }
 
     public function gateway(): BelongsTo

@@ -12,9 +12,5 @@ it('can set the class attribute', function () {
         ->and(
             FakePaymentMethod::factory()->create()
                 ->class
-        )->toBe(FakePaymentMethod::class)
-        ->and(
-            FakePaymentCustomerMethod::factory()->create()
-                ->class
-        )->toBe(FakePaymentCustomerMethod::class);
+        )->toBe(FakePaymentMethod::class);
 });

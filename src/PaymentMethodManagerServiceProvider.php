@@ -55,8 +55,8 @@ class PaymentMethodManagerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->app->bind(PaymentMethodManager::class, function($app) {
-            return new PaymentMethodManager();
+        $this->app->bind(PaymentMethodManager::class, function ($app) {
+            return new PaymentMethodManager;
         });
 
         $this->app->singleton(PaymentMethodRegistry::class, function () {
