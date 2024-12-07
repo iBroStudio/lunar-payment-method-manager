@@ -8,10 +8,3 @@ it('can instantiate', function () {
         GatewayApi::use(FakePaymentApiAdapter::class)
     )->toBeInstanceOf(GatewayApi::class);
 });
-
-it('can validate credentials', function () {
-    expect(
-        GatewayApi::use(FakePaymentApiAdapter::class)
-            ->validateCredentials(['token' => fake()->uuid])
-    )->toBeTrue();
-});

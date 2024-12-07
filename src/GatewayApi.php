@@ -4,7 +4,7 @@ namespace IBroStudio\PaymentMethodManager;
 
 use IBroStudio\PaymentMethodManager\Contracts\GatewayApiAdapterContract;
 
-class GatewayApi implements GatewayApiAdapterContract
+class GatewayApi
 {
     private function __construct(
         private string $driver,
@@ -13,15 +13,11 @@ class GatewayApi implements GatewayApiAdapterContract
 
     public static function use(
         string $driver,
+        array $parameters = []
     ): static {
         return new static(
             driver: $driver,
-            adapter: app()->make($driver),
+            adapter: app()->makeWith($driver, $parameters),
         );
-    }
-
-    public function validateCredentials(array $credentials): bool
-    {
-        return $this->adapter->validateCredentials($credentials);
     }
 }

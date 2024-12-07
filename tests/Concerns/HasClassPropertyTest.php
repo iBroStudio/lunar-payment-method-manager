@@ -1,6 +1,5 @@
 <?php
 
-use IBroStudio\TestSupport\Models\FakePaymentCustomerMethod;
 use IBroStudio\TestSupport\Models\FakePaymentGateway;
 use IBroStudio\TestSupport\Models\FakePaymentMethod;
 

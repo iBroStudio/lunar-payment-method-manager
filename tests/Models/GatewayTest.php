@@ -25,3 +25,14 @@ it('can save credentials', function () {
             $gateway->credentials->secret->decrypt()
         )->toBe($data['secret']);
 });
+
+it('can validate credentials', function () {
+    $gateway = FakePaymentGateway::factory()->create();
+
+    expect(
+        $gateway::$gatewayApiAdapter::validateCredentials(['token' => fake()->uuid])
+    )->toBeTrue()
+        ->and(
+            FakePaymentGateway::$gatewayApiAdapter::validateCredentials(['token' => fake()->uuid])
+        )->toBeTrue();
+});

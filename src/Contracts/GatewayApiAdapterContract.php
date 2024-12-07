@@ -4,5 +4,5 @@ namespace IBroStudio\PaymentMethodManager\Contracts;
 
 interface GatewayApiAdapterContract
 {
-    public function validateCredentials(array $credentials): bool;
+    public static function validateCredentials(array $credentials): bool;
 }

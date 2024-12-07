@@ -1,10 +1,7 @@
 <?php
 
-use IBroStudio\PaymentMethodManager\Models\CustomerMethod;
 use IBroStudio\PaymentMethodManager\Models\Gateway;
 use IBroStudio\PaymentMethodManager\Models\Method;
-use IBroStudio\TestSupport\Models\FakePaymentCustomerMethod;
-use IBroStudio\TestSupport\Models\FakePaymentCustomerMethod2;
 use IBroStudio\TestSupport\Models\FakePaymentGateway;
 use IBroStudio\TestSupport\Models\FakePaymentGateway2;
 use IBroStudio\TestSupport\Models\FakePaymentMethod;

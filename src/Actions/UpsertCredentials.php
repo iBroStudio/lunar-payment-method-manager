@@ -10,12 +10,12 @@ class UpsertCredentials
     use AsAction;
 
     public function handle(
-        array $credentialsData,
+        array $credentials,
         Model $model
     ): bool {
         $child = $model->getChildModel();
 
-        $child->credentials = $credentialsData;
+        $child->credentials = $credentials;
 
         return $child->save();
     }

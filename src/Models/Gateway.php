@@ -15,7 +15,9 @@ class Gateway extends Model
     use Concerns\HasCredentialsComponentsForm;
     use HasDataRepository;
 
-    public static string $dataClass;
+    public static string $gatewayData;
+
+    public static string $gatewayApiAdapter;
 
     protected $table = 'payment_gateways';
 
@@ -37,7 +39,7 @@ class Gateway extends Model
     protected function casts(): array
     {
         return [
-            'credentials' => DataObjectCast::class . (isset(static::$dataClass) ? ':' . static::$dataClass : ''),
+            'credentials' => DataObjectCast::class . (isset(static::$gatewayData) ? ':' . static::$gatewayData : ''),
         ];
     }
 
@@ -62,6 +64,11 @@ class Gateway extends Model
 
     public function api(): GatewayApi
     {
-        return $this->getChildModel()->api();
+        $model = $this->getChildModel();
+
+        return GatewayApi::use(
+            driver: $model::$gatewayApiAdapter,
+            parameters: $model->credentials->toArray()
+        );
     }
 }

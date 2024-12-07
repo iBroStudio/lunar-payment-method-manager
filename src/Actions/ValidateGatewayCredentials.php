@@ -10,11 +10,9 @@ class ValidateGatewayCredentials
     use AsAction;
 
     public function handle(
-        array $credentialsData,
+        array $credentials,
         Gateway $gateway
     ): bool {
-        return $gateway
-            ->api()
-            ->validateCredentials($credentialsData);
+        return $gateway::$gatewayApiAdapter::validateCredentials($credentials);
     }
 }
