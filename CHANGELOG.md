@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
  
+## [1.9.1](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.9.0...HEAD) (2024-12-07)
+### Features
+* add ValidateGatewayCredentials action ([0ad569](https://github.com/iBroStudio/lunar-payment-method-manager/commit/0ad569f107c558e01e589a6caefa6631ff275507))
+
+---
+
 ## [1.9.0](https://github.com/iBroStudio/lunar-payment-method-manager/compare/v1.8.1...HEAD) (2024-12-07)
 ### Features
 * add GatewayApi and adapter pattern ([743121](https://github.com/iBroStudio/lunar-payment-method-manager/commit/7431213bf86f41c8853b8d38edae59b3d8f48d4a))
