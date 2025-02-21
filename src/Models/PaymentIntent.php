@@ -45,4 +45,9 @@ class PaymentIntent extends Model
     {
         return $this->belongsTo(Method::class, 'method_id');
     }
+
+    public static function make(Cart $cart, Method $method): static
+    {
+        $intentData = $method->api()->createIntent($cart);
+    }
 }

@@ -9,9 +9,11 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use IBroStudio\PaymentMethodManager\Commands\PaymentMethodManagerCommand;
+use IBroStudio\PaymentMethodManager\Components\PaymentMethodLoader;
 use IBroStudio\PaymentMethodManager\Models\Method;
 use IBroStudio\PaymentMethodManager\Models\PaymentIntent;
 use Illuminate\Filesystem\Filesystem;
+use Livewire\Livewire;
 use Lunar\Models\Cart;
 use Lunar\Models\Customer;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
@@ -32,6 +34,7 @@ class PaymentMethodManagerServiceProvider extends PackageServiceProvider
                 '2024_12_05_061933_create_payment_intents_table',
             ])
             ->hasTranslations()
+            ->hasViews(static::$viewNamespace)
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
@@ -100,6 +103,8 @@ class PaymentMethodManagerServiceProvider extends PackageServiceProvider
         Cart::resolveRelationUsing('paymentIntents', function (Cart $cart) {
             return $cart->hasMany(PaymentIntent::class);
         });
+
+        Livewire::component('payment-method-loader', PaymentMethodLoader::class);
     }
 
     protected function getAssetPackageName(): ?string

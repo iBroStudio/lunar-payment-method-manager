@@ -3,6 +3,7 @@
 namespace IBroStudio\PaymentMethodManager;
 
 use IBroStudio\PaymentMethodManager\Contracts\GatewayApiAdapterContract;
+use IBroStudio\PaymentMethodManager\Models\Method;
 
 class GatewayApi
 {
@@ -19,5 +20,12 @@ class GatewayApi
             driver: $driver,
             adapter: app()->makeWith($driver, $parameters),
         );
+    }
+
+    public function withMethod(Method $method): static
+    {
+        $this->adapter->withMethod($method);
+
+        return $this;
     }
 }

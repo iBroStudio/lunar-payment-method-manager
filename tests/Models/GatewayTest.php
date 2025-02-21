@@ -11,6 +11,9 @@ it('can create a payment gateway', function () {
 });
 
 it('can save credentials', function () {
+    $gateway = FakePaymentGateway::factory()->create();
+    dd($gateway);
+
     $data = [
         'token' => fake()->uuid,
         'secret' => fake()->uuid,

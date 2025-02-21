@@ -3,10 +3,14 @@
 namespace IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources;
 
 use Filament\Forms;
+use Filament\Notifications;
 use Filament\Pages\SubNavigationPosition;
 use Filament\Tables;
 use Filament\Tables\Table;
 use IBroStudio\PaymentMethodManager\Actions\UpsertCredentials;
+use IBroStudio\PaymentMethodManager\Actions\UpsertGateway;
+use IBroStudio\PaymentMethodManager\Actions\ValidateGatewayCredentials;
+use IBroStudio\PaymentMethodManager\Data\GatewayData;
 use IBroStudio\PaymentMethodManager\Facades\PaymentMethodRegistry;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods;
 use IBroStudio\PaymentMethodManager\Filament\Clusters\PaymentMethods\Resources\GatewayResource\Pages;
@@ -30,10 +34,17 @@ class GatewayResource extends BaseResource
 
     public static function form(Forms\Form $form): Forms\Form
     {
+        if (is_null($form->getRecord())) {
+            return $form
+                ->schema([
+                    static::getGatewayFormComponent()
+                ]);
+        }
+
         return $form
             ->schema([
-                is_null($form->getRecord()) ?
-                    static::getGatewayFormComponent() : static::getCredentialsFormComponents($form),
+                static::getNameFormComponent(),
+                static::getCredentialsFormComponents($form),
             ]);
     }
 
@@ -43,13 +54,20 @@ class GatewayResource extends BaseResource
             ->label(__('Gateways available'))
             ->options(
                 PaymentMethodRegistry::all()
-                    // filter to take out existing gateways
                     ->pluck('name', 'key')
                     ->toArray()
             )
             ->selectablePlaceholder(false)
             ->required()
             ->native(false);
+    }
+
+    protected static function getNameFormComponent(): Forms\Components\Component
+    {
+        return Forms\Components\TextInput::make('name')
+            ->label(__('Name'))
+            ->required()
+            ->autofocus();
     }
 
     protected static function getCredentialsFormComponents(Forms\Form $form): ?Forms\Components\Component
@@ -68,8 +86,33 @@ class GatewayResource extends BaseResource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
+                    ->before(function (Tables\Actions\EditAction $action, Model $record, array $data) {
+                        if (! ValidateGatewayCredentials::run(
+                            credentials: $data['credentials'],
+                            gateway: $record
+                        )) {
+                            Notifications\Notification::make()
+                                ->danger()
+                                ->title(__('Bad credentials!'))
+                                ->body(__('Api test connection failed.'))
+                                ->send();
+
+                            $action->halt();
+                        }
+                    })
                     ->using(function (Model $record, array $data): Model {
-                        UpsertCredentials::run($data['credentials'], $record);
+                        UpsertGateway::run(
+                            gatewayData: GatewayData::from([
+                                'name' => $data['name'],
+                                'class' => $record->class,
+                            ]),
+                            gateway: $record,
+                        );
+
+                        UpsertCredentials::run(
+                            credentials: $data['credentials'],
+                            model: $record
+                        );
 
                         return $record;
                     }),

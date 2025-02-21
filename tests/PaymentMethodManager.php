@@ -3,6 +3,7 @@
 use IBroStudio\Billing\Models\Customer;
 use IBroStudio\PaymentMethodManager\Enums\PaymentMethodStatesEnum;
 use IBroStudio\PaymentMethodManager\Facades\PaymentMethod;
+use IBroStudio\TestSupport\Components\FakePaymentMethodForm;
 use IBroStudio\TestSupport\Models\FakePaymentMethod;
 use IBroStudio\TestSupport\Models\FakePaymentMethod2;
 use Lunar\Facades\Payments;
@@ -63,6 +64,20 @@ it('can get methods', function () {
             $method1->getRadioDeckKey() => $method1->getRadioDeckIcon(),
             $method2->getRadioDeckKey() => $method2->getRadioDeckIcon(),
         ],
+    ]);
+});
+
+it('can get payment method forms', function () {
+    $customer = Customer::factory()->create();
+    FakePaymentMethod::factory()->create();
+    FakePaymentMethod2::factory()->create();
+    $cart = Cart::factory()->create(['customer_id' => $customer->id]);
+
+    expect(
+        PaymentMethod::getPaymentMethodForms($cart)
+    )->toMatchArray([
+        1 => FakePaymentMethodForm::class,
+        2 => FakePaymentMethodForm::class,
     ]);
 });
 

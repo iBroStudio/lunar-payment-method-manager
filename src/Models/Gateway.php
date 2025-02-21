@@ -15,7 +15,7 @@ class Gateway extends Model
     use Concerns\HasCredentialsComponentsForm;
     use HasDataRepository;
 
-    public static string $gatewayData;
+    public static string $dataClass;
 
     public static string $gatewayApiAdapter;
 
@@ -39,7 +39,7 @@ class Gateway extends Model
     protected function casts(): array
     {
         return [
-            'credentials' => DataObjectCast::class . (isset(static::$gatewayData) ? ':' . static::$gatewayData : ''),
+            'credentials' => DataObjectCast::class . (isset(static::$dataClass) ? ':' . static::$dataClass : ''),
         ];
     }
 

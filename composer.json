@@ -22,7 +22,7 @@
     ],
     "version": "1.9.1",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "filament/filament": "^3.0",
         "guava/filament-icon-picker": "^2.2",
         "ibrostudio/filament-billing": "^1.5",

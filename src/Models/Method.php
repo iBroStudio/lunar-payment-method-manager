@@ -24,11 +24,15 @@ class Method extends Model implements PaymentTypeInterface, RadioDeckableContrac
 {
     use Concerns\CanManageCheckoutPayment;
     use Concerns\HasCredentialsComponentsForm;
+    use Concerns\HasGateway;
+    use Concerns\MethodHasIntents;
     use HasDataRepository;
     use HasTranslatableRadioDeck;
     use HasTranslations;
 
     protected $table = 'payment_methods';
+
+    protected $with = ['gateway'];
 
     public static string $dataClass;
 
@@ -91,19 +95,9 @@ class Method extends Model implements PaymentTypeInterface, RadioDeckableContrac
         return $this->class::find($this->getKey());
     }
 
-    public function gateway(): BelongsTo
-    {
-        return $this->belongsTo(Gateway::class, 'gateway_id');
-    }
-
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function intents(): HasManyThrough
-    {
-        return $this->hasManyThrough(PaymentIntent::class, Cart::class);
     }
 
     public function scopeDefault(Builder $query): void

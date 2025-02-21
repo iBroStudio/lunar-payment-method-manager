@@ -28,11 +28,11 @@ it('can save credentials', function () {
         'expires_at' => fake()->dateTime,
     ];
 
-    $gateway = FakePaymentMethod::factory()
+    $method = FakePaymentMethod::factory()
         ->create(['credentials' => $data]);
 
     expect(
-        $gateway->credentials->customer_id->decrypt()
+        $method->credentials->customer_id->decrypt()
     )->toBe($data['customer_id']);
 });
 
@@ -83,4 +83,10 @@ it('can scope customer active payment methods', function () {
     expect($customer->paymentMethods->count())->toBe(2)
         ->and($customer->activePaymentMethods->count())->toBe(1)
         ->and($customer->activePaymentMethods->first()->state)->toBe(PaymentMethodStatesEnum::ACTIVE);
+});
+
+it('gives access to gateway api', function () {
+    $method = FakePaymentMethod::factory()->create();
+
+    dd($method->api());
 });
